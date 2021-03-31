@@ -10,7 +10,10 @@ public class TestCalc {
         double sum = 1500000;
         float percent = (float) 0.19;
         double creditPeriod = 48;
-        int testPayment = (int) (sum / creditPeriod * percent);
+        float rate = percent / 12;
+        double pow = (Math.pow((1 + rate), creditPeriod));
+        double coefficient = (rate * pow / (pow - 1));
+        int testPayment = (int) (coefficient * sum);
         int payment = calc.payment(sum, percent, creditPeriod);
         assertEquals(testPayment, payment);
     }
@@ -20,7 +23,11 @@ public class TestCalc {
         double sum = 1500000;
         float percent = (float) 0.19;
         double creditPeriod = 48;
-        int testSumPays = (int) (sum * percent * creditPeriod);
+        float rate = percent / 12;
+        double pow = (Math.pow((1 + rate), creditPeriod));
+        double coefficient = (rate * pow / (pow - 1));
+        int testPayment = (int) (coefficient * sum);
+        int testSumPays = (int) (testPayment * creditPeriod);
         int sumPays = calc.sumPays(sum, percent, creditPeriod);
         assertEquals(testSumPays, sumPays);
     }
@@ -30,7 +37,12 @@ public class TestCalc {
         double sum = 1500000;
         float percent = (float) 0.19;
         double creditPeriod = 48;
-        int testOverPay  = (int) (Math.pow(percent, (creditPeriod / 12)) * sum - sum);
+        float rate = percent / 12;
+        double pow = (Math.pow((1 + rate), creditPeriod));
+        double coefficient = (rate * pow / (pow - 1));
+        int testPayment = (int) (coefficient * sum);
+        int testSumPays = (int) (testPayment * creditPeriod);
+        int testOverPay  = (int) (testSumPays - sum);
         int overPay = calc.overPay(sum, percent, creditPeriod);
         assertEquals(testOverPay, overPay);
     }
